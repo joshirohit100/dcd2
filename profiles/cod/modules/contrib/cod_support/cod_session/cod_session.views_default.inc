@@ -1971,7 +1971,6 @@ function cod_session_views_default_views() {
   $handler->display->display_options['filters']['field_accepted_value']['expose']['label'] = 'Status';
   $handler->display->display_options['filters']['field_accepted_value']['expose']['operator'] = 'field_accepted_value_op';
   $handler->display->display_options['filters']['field_accepted_value']['expose']['identifier'] = 'field_accepted_value';
-  $handler->display->display_options['filters']['field_accepted_value']['expose']['remember_roles'] = array();
   $handler->display->display_options['filters']['field_accepted_value']['group_info']['label'] = 'Status';
   $handler->display->display_options['filters']['field_accepted_value']['group_info']['identifier'] = 'field_accepted_value';
   $handler->display->display_options['filters']['field_accepted_value']['group_info']['remember'] = FALSE;
@@ -1990,7 +1989,6 @@ function cod_session_views_default_views() {
       'label' => 'Event ID',
     ),
   );
-
   $export['cod_session_sessions_admin'] = $view;
 
   $view = new view();
@@ -3129,6 +3127,241 @@ function cod_session_views_default_views() {
   $handler->display->display_options['menu']['name'] = 'user-menu';
   $handler->display->display_options['menu']['context'] = 0;
   $export['cod_session_user_presentations'] = $view;
+
+  $view = new view();
+  $view->name = 'custom_sessions';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Custom Sessions';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Accepted Sessions';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'field_speakers' => 'field_speakers',
+    'body' => 'body',
+    'field_experience' => 'field_experience',
+    'field_accepted' => 'field_accepted',
+    'og_vocabulary' => 'og_vocabulary',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_speakers' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'body' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_experience' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_accepted' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'og_vocabulary' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No Session Found';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  /* Relationship: Content: Author */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Sessions';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Speaker(s) */
+  $handler->display->display_options['fields']['field_speakers']['id'] = 'field_speakers';
+  $handler->display->display_options['fields']['field_speakers']['table'] = 'field_data_field_speakers';
+  $handler->display->display_options['fields']['field_speakers']['field'] = 'field_speakers';
+  $handler->display->display_options['fields']['field_speakers']['type'] = 'entityreference_entity_view';
+  $handler->display->display_options['fields']['field_speakers']['settings'] = array(
+    'view_mode' => 'full',
+    'links' => 1,
+  );
+  $handler->display->display_options['fields']['field_speakers']['delta_offset'] = '0';
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  /* Field: Content: Experience level */
+  $handler->display->display_options['fields']['field_experience']['id'] = 'field_experience';
+  $handler->display->display_options['fields']['field_experience']['table'] = 'field_data_field_experience';
+  $handler->display->display_options['fields']['field_experience']['field'] = 'field_experience';
+  /* Field: Content: Session Track */
+  $handler->display->display_options['fields']['og_vocabulary']['id'] = 'og_vocabulary';
+  $handler->display->display_options['fields']['og_vocabulary']['table'] = 'field_data_og_vocabulary';
+  $handler->display->display_options['fields']['og_vocabulary']['field'] = 'og_vocabulary';
+  $handler->display->display_options['fields']['og_vocabulary']['settings'] = array(
+    'link' => 0,
+  );
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'session' => 'session',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Status (field_accepted) */
+  $handler->display->display_options['filters']['field_accepted_value']['id'] = 'field_accepted_value';
+  $handler->display->display_options['filters']['field_accepted_value']['table'] = 'field_data_field_accepted';
+  $handler->display->display_options['filters']['field_accepted_value']['field'] = 'field_accepted_value';
+  $handler->display->display_options['filters']['field_accepted_value']['value'] = array(
+    'accepted' => 'accepted',
+  );
+  $handler->display->display_options['filters']['field_accepted_value']['group'] = 1;
+  /* Filter criterion: Content: Experience level (field_experience) */
+  $handler->display->display_options['filters']['field_experience_value']['id'] = 'field_experience_value';
+  $handler->display->display_options['filters']['field_experience_value']['table'] = 'field_data_field_experience';
+  $handler->display->display_options['filters']['field_experience_value']['field'] = 'field_experience_value';
+  $handler->display->display_options['filters']['field_experience_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_experience_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_experience_value']['expose']['operator_id'] = 'field_experience_value_op';
+  $handler->display->display_options['filters']['field_experience_value']['expose']['label'] = 'Experience level';
+  $handler->display->display_options['filters']['field_experience_value']['expose']['operator'] = 'field_experience_value_op';
+  $handler->display->display_options['filters']['field_experience_value']['expose']['identifier'] = 'field_experience_value';
+  $handler->display->display_options['filters']['field_experience_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    3 => 0,
+    5 => 0,
+    6 => 0,
+  );
+  /* Filter criterion: Global: Combine fields filter */
+  $handler->display->display_options['filters']['combine']['id'] = 'combine';
+  $handler->display->display_options['filters']['combine']['table'] = 'views';
+  $handler->display->display_options['filters']['combine']['field'] = 'combine';
+  $handler->display->display_options['filters']['combine']['operator'] = 'contains';
+  $handler->display->display_options['filters']['combine']['group'] = 1;
+  $handler->display->display_options['filters']['combine']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['combine']['expose']['operator_id'] = 'combine_op';
+  $handler->display->display_options['filters']['combine']['expose']['label'] = 'Filter by Keyword';
+  $handler->display->display_options['filters']['combine']['expose']['operator'] = 'combine_op';
+  $handler->display->display_options['filters']['combine']['expose']['identifier'] = 'combine';
+  $handler->display->display_options['filters']['combine']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    3 => 0,
+    5 => 0,
+    6 => 0,
+  );
+  $handler->display->display_options['filters']['combine']['fields'] = array(
+    'title' => 'title',
+    'body' => 'body',
+  );
+  /* Filter criterion: Content: Session Track (og_vocabulary) */
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['id'] = 'og_vocabulary_target_id';
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['table'] = 'field_data_og_vocabulary';
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['field'] = 'og_vocabulary_target_id';
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['expose']['operator_id'] = 'og_vocabulary_target_id_op';
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['expose']['label'] = 'Session Track';
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['expose']['operator'] = 'og_vocabulary_target_id_op';
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['expose']['identifier'] = 'og_vocabulary_target_id';
+  $handler->display->display_options['filters']['og_vocabulary_target_id']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    3 => 0,
+    5 => 0,
+    6 => 0,
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Proposed Sessions';
+  $handler->display->display_options['path'] = 'program/sessions/proposed';
+  $handler->display->display_options['menu']['type'] = 'tab';
+  $handler->display->display_options['menu']['title'] = 'Proposed Sessions';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'main-menu';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+  $handler->display->display_options['tab_options']['type'] = 'normal';
+  $handler->display->display_options['tab_options']['title'] = 'Sessions';
+  $handler->display->display_options['tab_options']['weight'] = '0';
+  $handler->display->display_options['tab_options']['name'] = 'main-menu';
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page_1');
+  $handler->display->display_options['path'] = 'program/sessions/accepted';
+  $handler->display->display_options['menu']['type'] = 'default tab';
+  $handler->display->display_options['menu']['title'] = 'Accepted Sessions';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'main-menu';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+  $handler->display->display_options['tab_options']['type'] = 'normal';
+  $handler->display->display_options['tab_options']['title'] = 'Sessions';
+  $handler->display->display_options['tab_options']['weight'] = '0';
+  $handler->display->display_options['tab_options']['name'] = 'main-menu';
+  $export['custom_sessions'] = $view;
 
   return $export;
 }

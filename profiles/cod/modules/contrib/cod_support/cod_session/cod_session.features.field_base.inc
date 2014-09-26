@@ -271,7 +271,7 @@ function cod_session_field_default_field_bases() {
             'use_context' => 'yes',
           ),
           'views-select-list' => array(
-            'status' => 0,
+            'status' => 1,
           ),
         ),
         'sort' => array(
@@ -279,7 +279,9 @@ function cod_session_field_default_field_bases() {
           'property' => 'weight',
           'type' => 'property',
         ),
-        'target_bundles' => array(),
+        'target_bundles' => array(
+          'session_tracks_1' => 'session_tracks_1',
+        ),
       ),
       'handler_submit' => 'Change handler',
       'target_type' => 'taxonomy_term',
