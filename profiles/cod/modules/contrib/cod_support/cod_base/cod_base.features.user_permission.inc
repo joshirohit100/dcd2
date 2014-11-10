@@ -15,6 +15,7 @@ function cod_base_user_default_permissions() {
     'name' => 'access administration menu',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
       'content editor' => 'content editor',
     ),
     'module' => 'admin_menu',
@@ -25,6 +26,7 @@ function cod_base_user_default_permissions() {
     'name' => 'access administration pages',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
       'content editor' => 'content editor',
     ),
     'module' => 'system',
